@@ -52,7 +52,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="NumberToWordsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringCalcultorTests.cs" />
+    <Compile Include="WordsToNumbersTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Exercises\TDDExercises.csproj">

@@ -1,0 +1,6 @@
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\bin\Debug\TDDExercises.dll
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\bin\Debug\TDDExercises.pdb
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\obj\Debug\TDDExercises.csprojResolveAssemblyReference.cache
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\obj\Debug\TDDExercises.csproj.CoreCompileInputs.cache
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\obj\Debug\TDDExercises.dll
+C:\Users\rrankin\team5-c-week4-pair-exercises\M1-w4d1-tdd-exercises-pair\Exercises\obj\Debug\TDDExercises.pdb
