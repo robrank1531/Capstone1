@@ -1,0 +1,6 @@
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\bin\Debug\WordCount.exe.config
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\bin\Debug\WordCount.exe
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\bin\Debug\WordCount.pdb
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\obj\Debug\WordCount.csproj.CoreCompileInputs.cache
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\obj\Debug\WordCount.exe
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d2-file-io-part1-exercises-pair\WordCount\obj\Debug\WordCount.pdb
