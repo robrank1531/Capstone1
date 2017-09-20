@@ -1,0 +1,7 @@
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\bin\Debug\FindAndReplace.exe.config
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\bin\Debug\FindAndReplace.exe
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\bin\Debug\FindAndReplace.pdb
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\obj\Debug\FindAndReplace.csprojResolveAssemblyReference.cache
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\obj\Debug\FindAndReplace.csproj.CoreCompileInputs.cache
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\obj\Debug\FindAndReplace.exe
+C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d3-file-io-part2-exercises-pair\FindAndReplace\obj\Debug\FindAndReplace.pdb
