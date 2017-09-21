@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Capstone
 {
@@ -70,7 +71,7 @@ namespace Capstone
         public void PurchaseMenu()
         {
             bool finished = false;
-            while (finished == false)
+            do
             {
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
@@ -86,14 +87,14 @@ namespace Capstone
                     if (input == "1.00" || input == "2.00" || input == "5.00" || input == "10.00")
                     {
                         myVending.FeedMoney(Decimal.Parse(input));
-                        this.LogWriter("Feed money:")
+                        this.LogWriter("Feed money:");
                         //Console.WriteLine("Press any key to return to menu."); string clearOut = Console.ReadLine();
                     }
                     else
                     {
-                        Console.WriteLine("Please feed 1.00, 2.00, 5.00 or 10.00"); 
+                        Console.WriteLine("Please feed 1.00, 2.00, 5.00 or 10.00");
                         //Console.WriteLine("Press any key to return to menu."); string clearOut = Console.ReadLine();
-                    }                    
+                    }
                 }
                 else if (line == "2")
                 {
@@ -108,10 +109,8 @@ namespace Capstone
                     finished = true;
                     this.FinishTransaction();
                 }
-                while (Console.KeyAvailable)
-                                   Console.ReadKey(true);
-                
             }
+            while (finished == false);
         }
 
 
@@ -144,7 +143,8 @@ namespace Capstone
                 this.ConsumeItem(product);
                 //Console.WriteLine("Press any key to return to purchase menu.");
                 //string clearOut = Console.ReadLine();
-                this.PurchaseMenu();
+                //this.PurchaseMenu();
+                this.LogWriter(product.Name +" "+ product.Slot);
                 //need to return to purchase menu
             }
             else if (product.Quantity == 0)
@@ -152,21 +152,21 @@ namespace Capstone
                 Console.WriteLine("Sorry, the item is sold out.");
                 Console.WriteLine("Press any key to return to purchase menu.");
                 string clearOut = Console.ReadLine();
-                this.PurchaseMenu();
+                //this.PurchaseMenu();
                 //sold out return to purchase menu
             }
             else if (myVending.Balance < product.Price)
             {
                 Console.WriteLine("Sorry, please feed more money.");
                 string clearOut = Console.ReadLine();
-                this.PurchaseMenu();
+                //this.PurchaseMenu();
             }
             else
             {
                 Console.WriteLine("Sorry, the item does not exist.");
                 Console.WriteLine("Press any key to return to purchase menu.");
                 string clearOut = Console.ReadLine();
-                this.PurchaseMenu();
+                //this.PurchaseMenu();
                 //inform customer it doesnt exist and return to purchase menu
             }
         }
@@ -194,7 +194,10 @@ namespace Capstone
                     nickelCounter++;
                 }
             }
-
+            Console.WriteLine("Your change is: " + quarterCounter + " quarters, " + dimeCounter + " dimes, and " + nickelCounter + " nickels");
+            this.LogWriter("Give change: ");
+            Console.WriteLine("Press enter to close");
+            string nothing = Console.ReadLine();
         }
 
         public void ConsumeItem(Item product)
@@ -218,7 +221,15 @@ namespace Capstone
         }
         public void LogWriter(string action)
         {
-
+            string inputPath = Environment.CurrentDirectory;
+            string outputFile = "Log.txt";
+            string outputFullPath = Path.Combine(inputPath, outputFile);
+            decimal previousBalance = myVending.Balance;
+            using (StreamWriter sw = new StreamWriter(outputFullPath, true))
+            {
+                sw.WriteLine(DateTime.UtcNow + " " + action + " " + previousBalance.ToString("F2") +" "+ myVending.Balance.ToString("F2"));
+            }
+            previousBalance = myVending.Balance;
         }
     }
 }
