@@ -10,6 +10,9 @@ namespace Capstone
     {
         static void Main(string[] args)
         {
+            VendingMachine myVending = new VendingMachine();
+            CommandLineInterface myCLI = new CommandLineInterface(myVending);
+            myCLI.RunProgram();
         }
     }
 }
