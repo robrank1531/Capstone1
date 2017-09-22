@@ -16,15 +16,12 @@ namespace Capstone
             set { balance = value; }
         }
         public VendingMachine()
-        {
-            
+        {            
             string inputFile = @"C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d4-c-capstone\etc\vendingmachine.csv";
             try
             {
-
                 using (StreamReader sr = new StreamReader(inputFile))
-                {
-                    
+                {                    
                     while (!sr.EndOfStream)
                     {
                         List<Item> tempList = new List<Item>();
@@ -39,15 +36,9 @@ namespace Capstone
                     }
                 }
             }
-            catch { return; }
-
-            
+            catch { return; }            
         }
         
-        //public int Balance()
-        //{
-
-        //}
         public decimal FeedMoney(decimal num)
         {
             balance = balance + num;
@@ -69,39 +60,6 @@ namespace Capstone
                 
             }
             return null;
-        }
-        //public Item Purchase(Item product)
-        //{
-        //    if(product.Quantity > 0)
-        //    {
-        //        product.Quantity = product.Quantity - 1;
-        //        balance = balance - product.Price;
-        //        //need to return to purchase menu
-        //    }
-        //    else if(product.Quantity == 0)
-        //    {
-        //        //sold out return to purchase menu
-        //    }
-        //    else
-        //    {
-        //        //inform customer it doesnt exist and return to purchase menu
-        //    }
-        //}
-        //public void FinishTransaction()
-        //{
-        //    while( balance >= .25)
-        //    {
-        //        balance -= .25;
-        //    }
-        //    while(balance >= .10)
-        //    {
-        //        balance -= .10;
-        //    }
-        //    while(balance >= .05)
-        //    {
-        //        balance -= .05;
-        //    }
-            
-        //}
+        }        
     }
 }

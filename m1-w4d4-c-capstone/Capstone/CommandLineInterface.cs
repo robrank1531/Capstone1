@@ -12,9 +12,7 @@ namespace Capstone
         decimal previousBalance = 0;
         public VendingMachine myVending;
 
-        
-
-        public CommandLineInterface (VendingMachine name)
+        public CommandLineInterface(VendingMachine name)
         {
             myVending = name;
         }
@@ -26,48 +24,41 @@ namespace Capstone
 
         public void MainMenu()
         {
-            
-
             Console.WriteLine("(1) Display Vending Machine Items");
             Console.WriteLine("(2) Purchase");
             Console.WriteLine("(3) Exit");
             string line = Console.ReadLine();
             if (line == "1")
             {
-               this.DisplayItems();
+                this.DisplayItems();
             }
             else if (line == "2")
             {
                 this.PurchaseMenu();
-                
+
             }
             else if (line == "3")
             {
                 return;
             }
-            
         }
         public void DisplayItems()
         {
-
-            foreach(Item product in myVending.Inventory)
+            foreach (Item product in myVending.Inventory)
             {
-                if(product.Quantity == 0)
+                if (product.Quantity == 0)
                 {
-                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " SOLD OUT");                  
-                    
+                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " SOLD OUT");
                 }
                 else
                 {
-                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " " + product.Quantity);                    
-                    
+                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " " + product.Quantity);
                 }
             }
             Console.WriteLine();
             Console.WriteLine("Hit any key to return to main menu");
             string blankString = Console.ReadLine();
             this.MainMenu();
-            
         }
 
         public void PurchaseMenu()
@@ -79,7 +70,6 @@ namespace Capstone
                 Console.WriteLine("(2) Select Product");
                 Console.WriteLine("(3) Finish Transaction");
                 Console.WriteLine("Balance: " + "$" + myVending.Balance.ToString("F2"));
-
                 string line = Console.ReadLine();
 
                 if (line == "1")
@@ -90,12 +80,10 @@ namespace Capstone
                     {
                         myVending.FeedMoney(Decimal.Parse(input));
                         this.LogWriter("Feed money:");
-                        //Console.WriteLine("Press any key to return to menu."); string clearOut = Console.ReadLine();
                     }
                     else
                     {
                         Console.WriteLine("Please feed 1.00, 2.00, 5.00 or 10.00");
-                        //Console.WriteLine("Press any key to return to menu."); string clearOut = Console.ReadLine();
                     }
                 }
                 else if (line == "2")
@@ -132,7 +120,6 @@ namespace Capstone
                     string clearOut = Console.ReadLine();
                     this.MainMenu();
                 }
-
             }
             return null;
         }
@@ -144,33 +131,24 @@ namespace Capstone
                 product.Quantity = product.Quantity - 1;
                 myVending.Balance = myVending.Balance - product.Price;
                 this.ConsumeItem(product);
-                //Console.WriteLine("Press any key to return to purchase menu.");
-                //string clearOut = Console.ReadLine();
-                //this.PurchaseMenu();
-                this.LogWriter(product.Name +" "+ product.Slot);
-                //need to return to purchase menu
+                this.LogWriter(product.Name + " " + product.Slot);
             }
             else if (product.Quantity == 0)
             {
                 Console.WriteLine("Sorry, the item is sold out.");
                 Console.WriteLine("Press any key to return to purchase menu.");
                 string clearOut = Console.ReadLine();
-                //this.PurchaseMenu();
-                //sold out return to purchase menu
             }
             else if (myVending.Balance < product.Price)
             {
                 Console.WriteLine("Sorry, please feed more money.");
                 string clearOut = Console.ReadLine();
-                //this.PurchaseMenu();
             }
             else
             {
                 Console.WriteLine("Sorry, the item does not exist.");
                 Console.WriteLine("Press any key to return to purchase menu.");
                 string clearOut = Console.ReadLine();
-                //this.PurchaseMenu();
-                //inform customer it doesnt exist and return to purchase menu
             }
         }
         public void FinishTransaction()
@@ -227,12 +205,11 @@ namespace Capstone
             string inputPath = Environment.CurrentDirectory;
             string outputFile = "Log.txt";
             string outputFullPath = Path.Combine(inputPath, outputFile);
-            
+
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
-                sw.WriteLine(DateTime.UtcNow + " " + action + " " + previousBalance.ToString("F2") +" "+ myVending.Balance.ToString("F2"));
+                sw.WriteLine(DateTime.UtcNow + " " + action + " " + previousBalance.ToString("F2") + " " + myVending.Balance.ToString("F2"));
             }
-            previousBalance = myVending.Balance;
         }
     }
 }

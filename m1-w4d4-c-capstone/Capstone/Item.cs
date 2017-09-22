@@ -47,6 +47,5 @@ namespace Capstone
                 inventory = value;
             }
         }
-
     }
 }
