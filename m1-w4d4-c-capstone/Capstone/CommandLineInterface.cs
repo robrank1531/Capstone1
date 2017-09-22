@@ -9,8 +9,9 @@ namespace Capstone
 {
     public class CommandLineInterface : Item
     {
-
+        decimal previousBalance = 0;
         public VendingMachine myVending;
+
         
 
         public CommandLineInterface (VendingMachine name)
@@ -22,6 +23,7 @@ namespace Capstone
             VendingMachine myVending = new VendingMachine();
             this.MainMenu();
         }
+
         public void MainMenu()
         {
             
@@ -138,6 +140,7 @@ namespace Capstone
         {
             if (product.Quantity > 0 && myVending.Balance > product.Price)
             {
+                previousBalance = myVending.Balance;
                 product.Quantity = product.Quantity - 1;
                 myVending.Balance = myVending.Balance - product.Price;
                 this.ConsumeItem(product);
@@ -224,7 +227,7 @@ namespace Capstone
             string inputPath = Environment.CurrentDirectory;
             string outputFile = "Log.txt";
             string outputFullPath = Path.Combine(inputPath, outputFile);
-            decimal previousBalance = myVending.Balance;
+            
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
                 sw.WriteLine(DateTime.UtcNow + " " + action + " " + previousBalance.ToString("F2") +" "+ myVending.Balance.ToString("F2"));

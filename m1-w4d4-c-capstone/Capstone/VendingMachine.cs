@@ -52,6 +52,7 @@ namespace Capstone
         {
             balance = balance + num;
             return balance;
+            
         }
         public Item FindItem(string item)
         {
