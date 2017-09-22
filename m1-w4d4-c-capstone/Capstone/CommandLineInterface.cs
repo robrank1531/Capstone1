@@ -228,7 +228,7 @@ namespace Capstone
             {
                 foreach(Item product in myVending.Inventory)
                 {
-                    sw.WriteLine(product.Name + "|" + product.Quantity);
+                    sw.WriteLine(product.Name + " | " + product.Quantity);
                 }
                 sw.WriteLine();
                 sw.WriteLine("*TOTAL SALES*: " + totalSales.ToString("F2"));
