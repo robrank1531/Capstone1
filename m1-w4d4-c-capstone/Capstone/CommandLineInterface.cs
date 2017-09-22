@@ -44,15 +44,18 @@ namespace Capstone
         }
         public void DisplayItems()
         {
+            Console.WriteLine("Slot" + "Name".PadLeft(15) + "Price".PadLeft(23) + "Quantity".PadLeft(23));
+            Console.WriteLine("-".PadRight(100, '-'));
             foreach (Item product in myVending.Inventory)
             {
+                
                 if (product.Quantity == 0)
                 {
-                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " SOLD OUT");
+                    Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString("F2").PadLeft(20)+ " SOLD OUT".PadLeft(20));
                 }
                 else
                 {
-                    Console.WriteLine(product.Slot + " " + product.Name + " " + product.Price + " " + product.Quantity);
+                    Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString().PadLeft(20) + product.Quantity.ToString().PadLeft(20));
                 }
             }
             Console.WriteLine();
