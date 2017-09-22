@@ -136,7 +136,7 @@ namespace Capstone
                     myVending.Balance = myVending.Balance - product.Price;
                     totalSales += product.Price;
                     this.ConsumeItem(product);
-                    this.LogWriter(product.Name + " " + product.Slot);
+                    this.LogWriter(product.Name + " | " + product.Slot);
                 }
                 else if (product.Quantity == 0)
                 {
@@ -183,7 +183,7 @@ namespace Capstone
             this.LogWriter("GIVE CHANGE: ");
             this.SalesReport(totalSales);
             Console.WriteLine("Press enter to close");
-            string nothing = Console.ReadLine();
+            Console.ReadKey();
         }
 
         public void ConsumeItem(Item product)
@@ -191,18 +191,22 @@ namespace Capstone
             if (product.Slot.Contains('A'))
             {
                 Console.WriteLine("Crunch Crunch, Yum!");
+                Console.WriteLine();
             }
             else if (product.Slot.Contains('B'))
             {
                 Console.WriteLine("Munch Munch, Yum!");
+                Console.WriteLine();
             }
             else if (product.Slot.Contains('C'))
             {
                 Console.WriteLine("Glug Glug, Yum!");
+                Console.WriteLine();
             }
             else if (product.Slot.Contains('D'))
             {
                 Console.WriteLine("Chew Chew, Yum!");
+                Console.WriteLine();
             }
         }
         public void LogWriter(string action)
@@ -214,7 +218,7 @@ namespace Capstone
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
                 
-                sw.WriteLine(DateTime.UtcNow + action.PadLeft(20) + previousBalance.ToString("F2").PadLeft(20) + myVending.Balance.ToString("F2").PadLeft(20));
+                sw.WriteLine(DateTime.UtcNow + action.PadLeft(23) +previousBalance.ToString("F2").PadLeft(23) + myVending.Balance.ToString("F2").PadLeft(23));
             }
             previousBalance = myVending.Balance;
         }
@@ -226,9 +230,12 @@ namespace Capstone
 
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
+                sw.WriteLine("-".PadRight(50,'-'));
+                sw.WriteLine("Name | Amount Sold");
+                sw.WriteLine("-".PadRight(50,'-'));
                 foreach(Item product in myVending.Inventory)
                 {
-                    sw.WriteLine(product.Name + " | " + product.Quantity);
+                    sw.WriteLine(product.Name + " | " + (5-product.Quantity));
                 }
                 sw.WriteLine();
                 sw.WriteLine("*TOTAL SALES*: " + totalSales.ToString("F2"));

@@ -16,11 +16,13 @@ namespace Capstone
             set { balance = value; }
         }
         public VendingMachine()
-        {            
-            string inputFile = @"C:\Users\rrankin\team5-c-week4-pair-exercises\m1-w4d4-c-capstone\etc\vendingmachine.csv";
+        {
+            string inputDirectory = Environment.CurrentDirectory;
+            string inputFile = @"vendingmachine.csv";
+            string inputFileDirectory = Path.Combine(inputDirectory, inputFile);
             try
             {
-                using (StreamReader sr = new StreamReader(inputFile))
+                using (StreamReader sr = new StreamReader(inputFileDirectory))
                 {                    
                     while (!sr.EndOfStream)
                     {
