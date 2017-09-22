@@ -10,6 +10,7 @@ namespace Capstone
     public class CommandLineInterface : Item
     {
         decimal previousBalance = 0;
+        decimal totalSales = 0;
         public VendingMachine myVending;
 
         public CommandLineInterface(VendingMachine name)
@@ -39,7 +40,7 @@ namespace Capstone
             }
             else if (line == "3")
             {
-                return;
+                this.FinishTransaction();
             }
         }
         public void DisplayItems()
@@ -59,8 +60,7 @@ namespace Capstone
                 }
             }
             Console.WriteLine();
-            Console.WriteLine("Hit any key to return to main menu");
-            string blankString = Console.ReadLine();
+  
             this.MainMenu();
         }
 
@@ -71,7 +71,8 @@ namespace Capstone
             {
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
-                Console.WriteLine("(3) Finish Transaction");
+                Console.WriteLine("(3) Return to Main Menu");
+                Console.WriteLine("(4) Finish Transaction");
                 Console.WriteLine("Balance: " + "$" + myVending.Balance.ToString("F2"));
                 string line = Console.ReadLine();
 
@@ -82,7 +83,7 @@ namespace Capstone
                     if (input == "1.00" || input == "2.00" || input == "5.00" || input == "10.00")
                     {
                         myVending.FeedMoney(Decimal.Parse(input));
-                        this.LogWriter("Feed money:");
+                        this.LogWriter("FEED MONEY:");
                     }
                     else
                     {
@@ -94,10 +95,14 @@ namespace Capstone
                     Item myItem = new Item();
                     Console.WriteLine("What item would you like to select?");
                     string input = Console.ReadLine();
-                    myItem = myVending.FindItem(input);
+                    myItem = myVending.FindItem(input.ToUpper());
                     this.Purchase(myItem);
                 }
                 else if (line == "3")
+                {
+                    this.MainMenu();
+                }
+                else if (line == "4")
                 {
                     finished = true;
                     this.FinishTransaction();
@@ -110,7 +115,8 @@ namespace Capstone
 
         public Item FindItem(string item)
         {
-            foreach (Item product in Inventory)
+
+            foreach (Item product in myVending.Inventory)
             {
                 if (product.Slot == item)
                 {
@@ -119,39 +125,40 @@ namespace Capstone
                 else
                 {
                     Console.WriteLine("Sorry, the item does not exist.");
-                    Console.WriteLine("Press any key to return to main menu.");
-                    string clearOut = Console.ReadLine();
-                    this.MainMenu();
+                    Console.WriteLine();
+                    
                 }
             }
             return null;
         }
         public void Purchase(Item product)
         {
-            if (product.Quantity > 0 && myVending.Balance > product.Price)
+            try
             {
-                previousBalance = myVending.Balance;
-                product.Quantity = product.Quantity - 1;
-                myVending.Balance = myVending.Balance - product.Price;
-                this.ConsumeItem(product);
-                this.LogWriter(product.Name + " " + product.Slot);
+                if (product.Quantity > 0 && myVending.Balance > product.Price)
+                {
+                    previousBalance = myVending.Balance;
+                    product.Quantity = product.Quantity - 1;
+                    myVending.Balance = myVending.Balance - product.Price;
+                    totalSales += product.Price;
+                    this.ConsumeItem(product);
+                    this.LogWriter(product.Name + " " + product.Slot);
+                }
+                else if (product.Quantity == 0)
+                {
+                    Console.WriteLine("Sorry, the item is sold out.");
+                    Console.WriteLine();
+                }
+                else if (myVending.Balance < product.Price)
+                {
+                    Console.WriteLine("Sorry, please feed more money.");
+                    Console.WriteLine();
+                }
             }
-            else if (product.Quantity == 0)
-            {
-                Console.WriteLine("Sorry, the item is sold out.");
-                Console.WriteLine("Press any key to return to purchase menu.");
-                string clearOut = Console.ReadLine();
-            }
-            else if (myVending.Balance < product.Price)
-            {
-                Console.WriteLine("Sorry, please feed more money.");
-                string clearOut = Console.ReadLine();
-            }
-            else
+            catch
             {
                 Console.WriteLine("Sorry, the item does not exist.");
-                Console.WriteLine("Press any key to return to purchase menu.");
-                string clearOut = Console.ReadLine();
+                Console.WriteLine();
             }
         }
         public void FinishTransaction()
@@ -179,7 +186,8 @@ namespace Capstone
                 }
             }
             Console.WriteLine("Your change is: " + quarterCounter + " quarters, " + dimeCounter + " dimes, and " + nickelCounter + " nickels");
-            this.LogWriter("Give change: ");
+            this.LogWriter("GIVE CHANGE: ");
+            this.SalesReport(totalSales);
             Console.WriteLine("Press enter to close");
             string nothing = Console.ReadLine();
         }
@@ -215,6 +223,22 @@ namespace Capstone
                 sw.WriteLine(DateTime.UtcNow + action.PadLeft(20) + previousBalance.ToString("F2").PadLeft(20) + myVending.Balance.ToString("F2").PadLeft(20));
             }
             previousBalance = myVending.Balance;
+        }
+        public void SalesReport(decimal finalTotalSales)
+        {
+            string inputPath = Environment.CurrentDirectory;
+            string outputFile = "Sales_Report.txt";
+            string outputFullPath = Path.Combine(inputPath, outputFile);
+
+            using (StreamWriter sw = new StreamWriter(outputFullPath, true))
+            {
+                foreach(Item product in myVending.Inventory)
+                {
+                    sw.WriteLine(product.Name + "|" + product.Quantity);
+                }
+                sw.WriteLine();
+                sw.WriteLine("*TOTAL SALES*: " + totalSales.ToString("F2"));
+            }
         }
     }
 }
