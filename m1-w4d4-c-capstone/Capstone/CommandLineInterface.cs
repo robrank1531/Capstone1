@@ -25,6 +25,7 @@ namespace Capstone
 
         public void MainMenu()
         {
+
             Console.WriteLine("(1) Display Vending Machine Items");
             Console.WriteLine("(2) Purchase");
             Console.WriteLine("(3) Exit");
@@ -42,71 +43,83 @@ namespace Capstone
             {
                 this.FinishTransaction();
             }
+            else
+            {
+                Console.WriteLine("Sorry, you have entered an invalid option. Please try again.");
+                Console.WriteLine();
+                this.MainMenu();
+            }
         }
         public void DisplayItems()
         {
             Console.WriteLine("Slot" + "Name".PadLeft(15) + "Price".PadLeft(23) + "Quantity".PadLeft(23));
             Console.WriteLine("-".PadRight(100, '-'));
             foreach (Item product in myVending.Inventory)
-            {                
+            {
                 if (product.Quantity == 0)
                 {
-                    Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString("F2").PadLeft(20)+ " SOLD OUT".PadLeft(20));
+                    Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString("F2").PadLeft(20) + " SOLD OUT".PadLeft(20));
                 }
                 else
                 {
                     Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString().PadLeft(20) + product.Quantity.ToString().PadLeft(20));
                 }
             }
-            Console.WriteLine();  
+            Console.WriteLine();
             this.MainMenu();
         }
 
         public void PurchaseMenu()
         {
             bool finished = false;
-            do
-            {
-                Console.WriteLine("(1) Feed Money");
-                Console.WriteLine("(2) Select Product");
-                Console.WriteLine("(3) Return to Main Menu");
-                Console.WriteLine("(4) Finish Transaction");
-                Console.WriteLine("Balance: " + "$" + myVending.Balance.ToString("F2"));
-                string line = Console.ReadLine();
-
-                if (line == "1")
+                do
                 {
-                    Console.WriteLine("How much do you want to feed?");
-                    string input = Console.ReadLine();
-                    if (input == "1.00" || input == "2.00" || input == "5.00" || input == "10.00")
+                    Console.WriteLine("(1) Feed Money");
+                    Console.WriteLine("(2) Select Product");
+                    Console.WriteLine("(3) Finish Transaction");
+                    Console.WriteLine("Balance: " + "$" + myVending.Balance.ToString("F2"));
+                    string line = Console.ReadLine();
+
+                    if (line == "1")
                     {
-                        myVending.FeedMoney(Decimal.Parse(input));
-                        this.LogWriter("FEED MONEY:");
+                        Console.WriteLine("How much do you want to feed?");
+                        string input = Console.ReadLine();
+                        if (input == "1.00" || input == "2.00" || input == "5.00" || input == "10.00")
+                        {
+                            myVending.FeedMoney(Decimal.Parse(input));
+                            this.LogWriter("FEED MONEY:");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please feed 1.00, 2.00, 5.00 or 10.00");
+                        }
+                    }
+                    else if (line == "2")
+                    {
+                        Item myItem = new Item();
+                        Console.WriteLine("What item would you like to select?");
+                        string input = Console.ReadLine();
+                        myItem = myVending.FindItem(input.ToUpper());
+                        this.Purchase(myItem);
+                    }
+                    
+                    else if (line == "3")
+                    {
+                        finished = true;
+                        this.FinishTransaction();
+                    }
+                    else if (line == "4")
+                    {
+                        this.SalesReport(totalSales);
                     }
                     else
                     {
-                        Console.WriteLine("Please feed 1.00, 2.00, 5.00 or 10.00");
+                        Console.WriteLine("You have entered and invalid option. Please try again.");
+                        Console.WriteLine();
                     }
                 }
-                else if (line == "2")
-                {
-                    Item myItem = new Item();
-                    Console.WriteLine("What item would you like to select?");
-                    string input = Console.ReadLine();
-                    myItem = myVending.FindItem(input.ToUpper());
-                    this.Purchase(myItem);
-                }
-                else if (line == "3")
-                {
-                    this.MainMenu();
-                }
-                else if (line == "4")
-                {
-                    finished = true;
-                    this.FinishTransaction();
-                }
-            }
-            while (finished == false);
+                while (finished == false);
+            
         }
 
         public Item FindItem(string item)
@@ -120,7 +133,7 @@ namespace Capstone
                 else
                 {
                     Console.WriteLine("Sorry, the item does not exist.");
-                    Console.WriteLine();                    
+                    Console.WriteLine();
                 }
             }
             return null;
@@ -217,8 +230,8 @@ namespace Capstone
 
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
-                
-                sw.WriteLine(DateTime.UtcNow + action.PadLeft(23) +previousBalance.ToString("F2").PadLeft(23) + myVending.Balance.ToString("F2").PadLeft(23));
+
+                sw.WriteLine(DateTime.UtcNow + action.PadLeft(23) + previousBalance.ToString("F2").PadLeft(23) + myVending.Balance.ToString("F2").PadLeft(23));
             }
             previousBalance = myVending.Balance;
         }
@@ -230,12 +243,12 @@ namespace Capstone
 
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
-                sw.WriteLine("-".PadRight(50,'-'));
-                sw.WriteLine("Name | Amount Sold");
-                sw.WriteLine("-".PadRight(50,'-'));
-                foreach(Item product in myVending.Inventory)
+                sw.WriteLine("-".PadRight(50, '-'));
+                sw.WriteLine("Name | Amount Sold    " + DateTime.UtcNow);
+                sw.WriteLine("-".PadRight(50, '-'));
+                foreach (Item product in myVending.Inventory)
                 {
-                    sw.WriteLine(product.Name + " | " + (5-product.Quantity));
+                    sw.WriteLine(product.Name + " | " + (5 - product.Quantity));
                 }
                 sw.WriteLine();
                 sw.WriteLine("*TOTAL SALES*: " + totalSales.ToString("F2"));
