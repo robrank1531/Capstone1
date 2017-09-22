@@ -48,8 +48,7 @@ namespace Capstone
             Console.WriteLine("Slot" + "Name".PadLeft(15) + "Price".PadLeft(23) + "Quantity".PadLeft(23));
             Console.WriteLine("-".PadRight(100, '-'));
             foreach (Item product in myVending.Inventory)
-            {
-                
+            {                
                 if (product.Quantity == 0)
                 {
                     Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString("F2").PadLeft(20)+ " SOLD OUT".PadLeft(20));
@@ -59,8 +58,7 @@ namespace Capstone
                     Console.WriteLine(product.Slot + product.Name.PadLeft(20) + product.Price.ToString().PadLeft(20) + product.Quantity.ToString().PadLeft(20));
                 }
             }
-            Console.WriteLine();
-  
+            Console.WriteLine();  
             this.MainMenu();
         }
 
@@ -111,11 +109,8 @@ namespace Capstone
             while (finished == false);
         }
 
-
-
         public Item FindItem(string item)
         {
-
             foreach (Item product in myVending.Inventory)
             {
                 if (product.Slot == item)
@@ -125,8 +120,7 @@ namespace Capstone
                 else
                 {
                     Console.WriteLine("Sorry, the item does not exist.");
-                    Console.WriteLine();
-                    
+                    Console.WriteLine();                    
                 }
             }
             return null;
@@ -238,6 +232,7 @@ namespace Capstone
                 }
                 sw.WriteLine();
                 sw.WriteLine("*TOTAL SALES*: " + totalSales.ToString("F2"));
+                sw.WriteLine();
             }
         }
     }
