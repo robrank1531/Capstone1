@@ -208,8 +208,10 @@ namespace Capstone
 
             using (StreamWriter sw = new StreamWriter(outputFullPath, true))
             {
-                sw.WriteLine(DateTime.UtcNow + " " + action + " " + previousBalance.ToString("F2") + " " + myVending.Balance.ToString("F2"));
+                
+                sw.WriteLine(DateTime.UtcNow + action.PadLeft(20) + previousBalance.ToString("F2").PadLeft(20) + myVending.Balance.ToString("F2").PadLeft(20));
             }
+            previousBalance = myVending.Balance;
         }
     }
 }
